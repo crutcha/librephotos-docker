@@ -10,17 +10,25 @@
 version: "3.8"
 services:
   proxy:
-    image: reallibrephotos/librephotos-proxy:${tag}
+	image: nginx:latest
     container_name: proxy
     restart: unless-stopped
     volumes:
       - ${scanDirectory}:/data
       - ${data}/protected_media:/protected_media
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./certbot/www:/var/www/certbot/:ro
     ports:
-      - ${httpPort}:80
+      - 80:80
+      - 443:443
     depends_on:
       - backend
       - frontend
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
 
   db:
     image: postgres:13
