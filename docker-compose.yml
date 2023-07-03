@@ -17,7 +17,7 @@ services:
       - ${scanDirectory}:/data
       - ${data}/protected_media:/protected_media
       - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf/:ro
-      - /etc/letsencrypt/live/:/etc/nginx/ssl/live/
+      - /etc/letsencrypt/:/etc/nginx/ssl/
     ports:
       - 80:80
       - 443:443
